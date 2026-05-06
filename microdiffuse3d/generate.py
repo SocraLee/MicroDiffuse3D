@@ -211,7 +211,8 @@ def run_evaluation(args):
         logger.info(f"[{task_id}] PSNR: {final_psnr:.4f}, SSIM: {final_ssim:.4f}")
 
         if args.save_results and all_preds:
-            results_key = args.results_key or f"microdiffuse3d_output"
+            default_key = 'microdiffuse3d' if args.decoder_type == 'adapted' else 'microdiffuse3d_VAEdecoder'
+            results_key = args.results_key or default_key
             all_preds = np.concatenate(all_preds, axis=0)
             all_gts = np.concatenate(all_gts, axis=0)
 

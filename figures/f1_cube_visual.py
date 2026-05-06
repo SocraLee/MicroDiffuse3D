@@ -35,17 +35,15 @@ def load_data(idx=1281, data_path=None, use_cache=False):
     """Return (hr, lr, pred).  pred may be None if key not found."""
     import h5py
     if data_path is None:
-        data_path = ('../../../../../../../../m-chimera/chimera/nobackup/'
-                     'yongkang/MicroDiffuse/3DSR4z_comparision/results.h5')
+        # 3DSR HDF5 with `hr`, `lr`, and `microdiffuse3d_VAEdecoder` model prediction dataset.
+        data_path = '<YOUR_DATA_PATH>'
 
     with h5py.File(data_path, 'r') as f:
         hr = np.array(f['hr'][idx]).squeeze()
         lr = np.array(f['lr'][idx]).squeeze()
         pred = None
-        if 'sit_pretrain_output' in f:
-            pred = np.array(f['sit_pretrain_output'][idx]).squeeze()
-        elif 'SiTfromPretrain' in f:
-            pred = np.array(f['SiTfromPretrain'][idx]).squeeze()
+        if 'microdiffuse3d_VAEdecoder' in f:
+            pred = np.array(f['microdiffuse3d_VAEdecoder'][idx]).squeeze()
     return hr, lr, pred
 
 def generate_mask(nd, nh, nw, ratio=0.75, seed=42):

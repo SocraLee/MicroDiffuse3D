@@ -15,7 +15,7 @@ CUDA_VISIBLE_DEVICES=0 python microdiffuse3d/generate.py \
     --num-steps 50 \
     --decoder-type adapted \
     --decoder-path "./outputs/decoder/adapted/3d_sr/best_decoder.pth" \
-    --results-key microdiffuse3d_output_adapted
+    --results-key microdiffuse3d
 
 
 # ==========================================
@@ -31,4 +31,4 @@ CUDA_VISIBLE_DEVICES=0 python microdiffuse3d/generate.py \
     --batch-size 4 \
     --num-steps 50 \
     --project-name "MicroDiffuse3D" \
-    --results-key microdiffuse3d_output
+    --results-key microdiffuse3d_VAEdecoder

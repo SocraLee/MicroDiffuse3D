@@ -4,7 +4,7 @@ Row 1: Lateral (X-Y) Radial Power Spectrum  (Ours, 3DRCAN, SwinIR, GT)
 Row 2: Axial  (X-Z) Radial Power Spectrum   (same)
 Row 3: Lateral P-D | Axial P-D              (all methods incl. RLN, CARE, SRCNN)
 
-Usage: python supf7.py --h5 /path/to/results.h5 --name 3DSR
+Usage: python supf7.py --dataset {3DSR,Denoise,BioTISR}
 """
 import os, pickle, argparse
 from collections import OrderedDict
@@ -18,10 +18,13 @@ import seaborn as sns
 import nature_style
 from tqdm import tqdm
 
+# Per-dataset HDF5 result files. Each must contain `hr` (ground truth), `lr`
+# (input), and the model prediction datasets keyed by the entries in
+# RPS_METHODS / PD_EXTRA below.
 DATASETS = {
-    '3DSR':    '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DSR4z_comparision/results.h5',
-    'Denoise': '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DDenoise_comparision/results.h5',
-    'BioTISR': '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/BioTISR_spatial_comparision/results.h5',
+    '3DSR':    '<YOUR_DATA_PATH>',
+    'Denoise': '<YOUR_DATA_PATH>',
+    'BioTISR': '<YOUR_DATA_PATH>',
 }
 
 parser = argparse.ArgumentParser()
@@ -40,7 +43,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Methods shown in RPS (spectral) plots
 RPS_METHODS = OrderedDict([
-    ('sit_pretrain_output_adapted', 'Ours'),
+    ('microdiffuse3d', 'Ours'),
     ('RCAN_output',              '3DRCAN'),
     ('SwinIR_output',            'SwinIR'),
 ])
@@ -252,8 +255,8 @@ with h5py.File(H5_PATH, 'r') as f:
         imgs_c['3DRCAN'] = np.array(f['RCAN_output'][idx_target]).squeeze()[z_target]
     elif 'hr' in f: imgs_c['3DRCAN'] = np.array(f['hr'][idx_target]).squeeze()[z_target]
     
-    if 'sit_pretrain_output_adapted' in f:
-        imgs_c['Ours'] = np.array(f['sit_pretrain_output_adapted'][idx_target]).squeeze()[z_target]
+    if 'microdiffuse3d' in f:
+        imgs_c['Ours'] = np.array(f['microdiffuse3d'][idx_target]).squeeze()[z_target]
     elif 'hr' in f: imgs_c['Ours'] = np.array(f['hr'][idx_target]).squeeze()[z_target]
 
 for i, name in enumerate(img_names):

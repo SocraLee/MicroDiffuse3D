@@ -1,10 +1,10 @@
 """
 Sup_Fig_5_ablation.pdf — Decoder Ablation: violin plot comparison
 Methods:
-  - MicroDiffuse3D + adapted decoder  (SiTfromPretrainAdapted)
-  - MicroDiffuse3D + VAE decoder      (SiTfromPretrain)
+  - MicroDiffuse3D + adapted decoder  (microdiffuse3d)
+  - MicroDiffuse3D + VAE decoder      (microdiffuse3d_VAEdecoder)
   - 3DRCAN                            (RCAN)
-Dataset: 3DSR (3DSR4z_comparision/metrics.h5)
+Dataset: 3DSR
 """
 
 import matplotlib.pyplot as plt
@@ -18,14 +18,15 @@ import nature_style
 mm = nature_style.apply_nature_style()
 
 # ── 2. Data loading ──
-h5_path = ('../../../../../../../../m-chimera/chimera/nobackup/yongkang/'
-           'MicroDiffuse/3DSR4z_comparision/metrics.h5')
+# Per-sample metrics HDF5: keyed by `{method}_{metric}` arrays produced
+# from the model prediction files (see methods dict below for expected keys).
+h5_path = '<YOUR_DATA_PATH>'
 
 # HDF5 key prefix → display name
 methods = {
-    'SiTfromPretrainAdapted': 'Ours w/ adapted decoder',
-    'SiTfromPretrain':     'Ours w/ VAE decoder',
-    'RCAN':                '3DRCAN',
+    'microdiffuse3d':            'Ours w/ adapted decoder',
+    'microdiffuse3d_VAEdecoder': 'Ours w/ VAE decoder',
+    'RCAN':                      '3DRCAN',
 }
 
 metrics_map = {

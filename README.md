@@ -138,7 +138,7 @@ CUDA_VISIBLE_DEVICES=0 python microdiffuse3d/generate.py \
     --decoder-path ./outputs/decoder/adapted/3d_sr/best_decoder.pth
 ```
 
-Predicted volumes will be saved directly into the input HDF5 file under the key `microdiffuse3d_output`. Console output will report PSNR and SSIM.
+Predicted volumes will be saved directly into the input HDF5 file under the key `microdiffuse3d` (when `--decoder-type adapted`) or `microdiffuse3d_VAEdecoder` (default VAE decoder). Override with `--results-key <name>` if needed. Console output will report PSNR and SSIM.
 
 ---
 
@@ -154,7 +154,7 @@ The unified multi-task foundation model checkpoint can be downloaded here:
 
 Processed HDF5 datasets containing VAE and DINO embeddings are hosted on Zenodo. Download the respective splits below:
 
-|     Split      | SRS 3D Super-Resolution                                        | SRS 3D Denoise                                                 | BioTISR                                               |
+|     Split      | SRS 3D Super-Resolution                                        | SRS 3D Denoise                                                 | BioTISR                                                        |
 | :------------: | :------------------------------------------------------------- | :------------------------------------------------------------- | :------------------------------------------------------------- |
 |   **Train**    | [Link (19929571)](https://zenodo.org/records/19929571)         | [Link (19929547)](https://zenodo.org/records/19929547)         | [Link (19938235)](https://zenodo.org/records/19938235)         |
 | **Validation** | [Unified Link (19941581)](https://zenodo.org/records/19941581) | [Unified Link (19941581)](https://zenodo.org/records/19941581) | [Unified Link (19941581)](https://zenodo.org/records/19941581) |
@@ -162,12 +162,7 @@ Processed HDF5 datasets containing VAE and DINO embeddings are hosted on Zenodo.
 
 ### Reproducing Figures
 
-Figure reproduction scripts are provided in the `figures/` directory. Edit `figures/config.py` to set the correct paths to your downloaded test files and results, then run individual scripts:
-
-```bash
-python figures/f2pab.py   # Figure 2 panels a,b
-python figures/f3pab.py   # Figure 3 panels a,b
-```
+Figure reproduction scripts are provided in the `figures/` directory. Inside each script, set the correct paths to your generated files and results by replacing the `<YOUR_DATA_PATH>` placeholders. See [figures/README.md](figures/README.md) for the full list of scripts and the expected HDF5 layout.
 
 ---
 
@@ -187,7 +182,7 @@ MicroDiffuse3D/
 │   │   ├── sit_backbone.py      # SiT-3D backbone with factorized attention
 │   │   ├── attention.py         # Anisotropic lateral-axial attention
 │   │   ├── unet3d.py            # LR conditioning encoder-decoder
-│   │   ├── decoder.py           # Adapted & Fused post-diffusion decoders
+│   │   ├── decoder.py           # Post-diffusion decoders
 │   │   ├── utils.py             # Positional embeddings
 │   │   └── rope.py              # Rotary position embeddings
 │   └── data/

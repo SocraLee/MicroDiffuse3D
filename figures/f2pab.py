@@ -27,13 +27,13 @@ palette_dict = {
     'Interpolation':  '#D9D9D9',
 }
 
-# Load metrics from HDF5
-folder_name = "MicroDiffuse/3DSR4z_comparision"
-file_name = f'../../../../../../../../m-chimera/chimera/nobackup/yongkang/{folder_name}/metrics.h5'
+# Load metrics from HDF5. Each metrics file is produced from the model
+# prediction files and is keyed by `{method}_{metric}` arrays
+# (see utils.build_long_dataframe).
+file_name = '<YOUR_DATA_PATH>'  # 3DSR metrics
 df_1 = build_long_dataframe(file_name, "3DSR")
 
-folder_name = "MicroDiffuse/BioTISR_spatial_comparision"
-file_name = f'../../../../../../../../m-chimera/chimera/nobackup/yongkang/{folder_name}/metrics.h5'
+file_name = '<YOUR_DATA_PATH>'  # BioTISR metrics
 df_2 = build_long_dataframe(file_name, "BioTISR")
 df = pd.concat([df_1, df_2])
 
@@ -42,11 +42,12 @@ fig = plt.figure(figsize=(180 * mm, 65 * mm))
 gs_master = fig.add_gridspec(1, 2, width_ratios=[1, 2], wspace=0.15)
 gs_left = gs_master[0, 0].subgridspec(2, 1, hspace=0.1)
 
-# Panel a: dataset example images
+# Panel a: dataset example images.
+# Each results HDF5 must contain `hr`, `lr`, and per-method model prediction datasets.
 zSR_lr_raw, zSR_hr_raw = read_raw_image(
-    "../../../../../../../../m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DSR4z_comparision/results.h5", 4, 2, 10)
+    "<YOUR_DATA_PATH>", 4, 2, 10)
 biotisr_lr_raw, biotisr_hr_raw = read_raw_image(
-    '../../../../../../../../m-chimera/chimera/nobackup/yongkang/MicroDiffuse/BioTISR_spatial_comparision/results.h5', 0, 0, 0)
+    '<YOUR_DATA_PATH>', 0, 0, 0)
 
 datasets_config = [
     ("3DSR", zSR_lr_raw, zSR_hr_raw),

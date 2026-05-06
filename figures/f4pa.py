@@ -57,8 +57,9 @@ CENTER_START, CENTER_END = 5, 15  # Evaluate central 10 slices
 SHIFT_RANGE = 2                   # Z-shift matching range
 NUM_THRES = 10                    # Min avg cell count to keep sample
 
-# Data path (relative from plot_script/)
-H5_PATH = '../../../../../../../../m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DSR4z_comparision/results.h5'
+# 3DSR HDF5 with `hr`, `lr`, and per-method prediction datasets
+# (e.g. `microdiffuse3d`, `RCAN_output`, `RLN_output`, `SwinIR_output`).
+H5_PATH = '<YOUR_DATA_PATH>'
 
 # Cache paths
 MASK_CACHE = 'f4pa_new_masks.h5'      # Cellpose masks (run once)
@@ -172,7 +173,7 @@ METHOD_DISPLAY = {
     'RCAN_output': '3DRCAN',
     'RLN_output': 'RLN',
     'SwinIR_output': 'SwinIR',
-    'sit_pretrain_output_adapted': 'Ours',
+    'microdiffuse3d': 'Ours',
 }
 
 def rename_method(name):

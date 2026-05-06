@@ -17,10 +17,12 @@ import nature_style
 from scipy import stats
 from tqdm import tqdm
 
+# Per-dataset HDF5 result files. Each must contain `hr` (ground truth) and
+# the model prediction datasets keyed by the entries in METHODS below.
 DATASETS = {
-    '3DSR':    '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DSR4z_comparision/results.h5',
-    'Denoise': '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DDenoise_comparision/results.h5',
-    'BioTISR': '/m-chimera/chimera/nobackup/yongkang/MicroDiffuse/BioTISR_spatial_comparision/results.h5',
+    '3DSR':    '<YOUR_DATA_PATH>',
+    'Denoise': '<YOUR_DATA_PATH>',
+    'BioTISR': '<YOUR_DATA_PATH>',
 }
 
 parser = argparse.ArgumentParser()
@@ -34,7 +36,7 @@ mm = nature_style.apply_nature_style()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 METHODS = OrderedDict([
-    ('sit_pretrain_output_adapted', 'Ours'),
+    ('microdiffuse3d', 'Ours'),
     ('RCAN_output',              '3DRCAN'),
     ('hr',                       'HR'),
 ])

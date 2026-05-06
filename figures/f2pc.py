@@ -13,11 +13,12 @@ plt.rcParams['mathtext.default'] = 'regular'
 
 
 def get_image(idx=124):
-    data_dir = '../../../../../../../../m-chimera/chimera/nobackup/yongkang/MicroDiffuse/3DSR4z_comparision/results.h5'
+    # 3DSR HDF5 with `hr`, `lr`, `microdiffuse3d`, `RCAN_output` model prediction datasets.
+    data_dir = '<YOUR_DATA_PATH>'
     data = h5py.File(data_dir, 'r')
     hr = torch.from_numpy(data['hr'][idx]).squeeze()
     lr = torch.from_numpy(data['lr'][idx]).squeeze()
-    sit = torch.from_numpy(data['sit_pretrain_output_adapted'][idx]).squeeze()
+    sit = torch.from_numpy(data['microdiffuse3d'][idx]).squeeze()
     swinir = torch.from_numpy(data['RCAN_output'][idx]).squeeze()
     if hr.shape != lr.shape:
         with torch.no_grad():

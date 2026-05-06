@@ -36,9 +36,9 @@ def create_comparison_gif(data, output_filename, titles=None, fps=5):
 
 def build_long_dataframe(h5_path, dataset):
     """Load per-sample metrics from HDF5 and return a long-format DataFrame."""
-    methods = ['Interpolation', 'SRCNN', 'CARE', 'SwinIR', 'RCAN', 'RLN', 'SiTfromPretrainAdapted']
+    methods = ['Interpolation', 'SRCNN', 'CARE', 'SwinIR', 'RCAN', 'RLN', 'microdiffuse3d']
     methods_mapping = {m: m for m in methods}
-    methods_mapping['SiTfromPretrainAdapted'] = "Ours"
+    methods_mapping['microdiffuse3d'] = "Ours"
     methods_mapping['RCAN'] = "3DRCAN"
     if dataset == "":
         methods_mapping['Interpolation'] = "Inputs"

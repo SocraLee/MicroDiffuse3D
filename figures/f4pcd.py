@@ -65,24 +65,25 @@ def computer_metrics(hr, lr, baseline, ours) -> pd.DataFrame:
     return pd.DataFrame(records)
 
 
+# 3DSR HDF5 with `hr`, `lr`, `microdiffuse3d`, and `RCAN_output` model prediction datasets.
+data_path = '<YOUR_DATA_PATH>'
+
 if os.path.exists(cache_file) and read_cache:
     df = pd.read_csv(cache_file)
-    data = h5py.File('../../../../../../../../m-chimera/chimera/nobackup/yongkang/'
-                     'MicroDiffuse/3DSR4z_comparision/results.h5', 'r')
+    data = h5py.File(data_path, 'r')
     hr = torch.from_numpy(data['hr'][:]).squeeze()
     lr = torch.from_numpy(data['lr'][:]).squeeze()
-    sit = torch.from_numpy(data['sit_pretrain_output_adapted'][:]).squeeze()
+    sit = torch.from_numpy(data['microdiffuse3d'][:]).squeeze()
     rcan = torch.from_numpy(data['RCAN_output'][:]).squeeze()
     if hr.shape != lr.shape:
         inputs = lr.unsqueeze(1)
         lr = F.interpolate(inputs, size=(hr.shape[1], 256, 256),
                            mode='trilinear', align_corners=False).squeeze(1)
 else:
-    data = h5py.File('../../../../../../../../m-chimera/chimera/nobackup/yongkang/'
-                     'MicroDiffuse/3DSR4z_comparision/results.h5', 'r')
+    data = h5py.File(data_path, 'r')
     hr = torch.from_numpy(data['hr'][:]).squeeze()
     lr = torch.from_numpy(data['lr'][:]).squeeze()
-    sit = torch.from_numpy(data['sit_pretrain_output_adapted'][:]).squeeze()
+    sit = torch.from_numpy(data['microdiffuse3d'][:]).squeeze()
     rcan = torch.from_numpy(data['RCAN_output'][:]).squeeze()
     if hr.shape != lr.shape:
         inputs = lr.unsqueeze(1)
