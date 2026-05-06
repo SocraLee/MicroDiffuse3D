@@ -15,10 +15,10 @@ MicroDiffuse3D is a conditional diffusion model for volumetric (3D) microscopy i
 ## Architecture
 
 MicroDiffuse3D combines:
-1. **SiT-3D Backbone** — A 3D Diffusion Transformer (Scalable Interpolant Transformer) with Anisotropic Lateral-Axial Attention for efficient processing of volumetric data
-2. **3D UNet Conditioning Module** — Encodes low-resolution input volumes into dense conditioning signals
-3. **Post-Diffusion Decoders** — Adapted and Fused decoder variants for pixel-space refinement
-4. **REPA Alignment (optional)** — REPresentation Alignment loss using DINOv2 features for improved generation quality. This technique is not used in the paper, but in our initial experiments, it accelerates the convergence speed.
+1. **SiT-3D Backbone** — A 3D Diffusion Transformer with Anisotropic Lateral-Axial Attention for efficient processing of volumetric data
+2. **3D UNet Conditioning Module** — Encodes low-resolution input volumes into conditioning signals
+3. **Post-Diffusion Decoders** — Specialized decoder variants that map VAE latents back to pixel space for high-fidelity detail refinement
+4. **REPA Alignment (optional)** — REPresentation Alignment loss using DINOv2 features. We omitted this technique from our main results due to the high computational cost of preprocessing massive pretraining datasets. However, our initial experiments showed that it accelerates convergence and reduces data requirements. We have retained this feature in the codebase to facilitate adaptation to specific downstream tasks, particularly in domains where data is limited
 
 ## Installation
 ### Step 1: Clone the repository
